@@ -62,9 +62,9 @@ export default function DashboardPage() {
         supabase.from('jobs').select('id, title, status, customers(name)').eq('business_id', business.id).order('created_at', { ascending: false }).limit(5),
       ])
 
-      const weekRevenue = thisWeekInv?.reduce((s, i) => s + Number(i.total), 0) || 0
-      const lastWeekRevenue = lastWeekInv?.reduce((s, i) => s + Number(i.total), 0) || 0
-      const outstandingTotal = outstanding?.reduce((s, i) => s + Number(i.total), 0) || 0
+      const weekRevenue = thisWeekInv?.reduce((s: number, i: { total: number }) => s + Number(i.total), 0) || 0
+      const lastWeekRevenue = lastWeekInv?.reduce((s: number, i: { total: number }) => s + Number(i.total), 0) || 0
+      const outstandingTotal = outstanding?.reduce((s: number, i: { total: number }) => s + Number(i.total), 0) || 0
       const closeRate = (totalQuoted || 0) > 0 ? ((leadsWon || 0) / (totalQuoted || 1)) * 100 : 0
 
       setPulse({

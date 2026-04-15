@@ -36,7 +36,7 @@ export async function GET() {
         .eq('status', 'paid')
         .gte('paid_at', weekStart.toISOString())
 
-      const weekRevenue = thisWeekInvoices?.reduce((sum, inv) => sum + Number(inv.total), 0) || 0
+      const weekRevenue = thisWeekInvoices?.reduce((sum: number, inv: { total: number }) => sum + Number(inv.total), 0) || 0
 
       // Revenue last week
       const { data: lastWeekInvoices } = await supabase
@@ -47,7 +47,7 @@ export async function GET() {
         .gte('paid_at', twoWeeksStart.toISOString())
         .lt('paid_at', weekStart.toISOString())
 
-      const lastWeekRevenue = lastWeekInvoices?.reduce((sum, inv) => sum + Number(inv.total), 0) || 0
+      const lastWeekRevenue = lastWeekInvoices?.reduce((sum: number, inv: { total: number }) => sum + Number(inv.total), 0) || 0
 
       // Jobs completed this week
       const { count: jobsCompleted } = await supabase
@@ -90,7 +90,7 @@ export async function GET() {
         .eq('business_id', business.id)
         .in('status', ['sent', 'overdue'])
 
-      const outstandingTotal = outstandingInvoices?.reduce((sum, inv) => sum + Number(inv.total), 0) || 0
+      const outstandingTotal = outstandingInvoices?.reduce((sum: number, inv: { total: number }) => sum + Number(inv.total), 0) || 0
       const outstandingCount = outstandingInvoices?.length || 0
 
       // Projected next month (based on booked jobs)
@@ -102,7 +102,7 @@ export async function GET() {
         .gte('created_at', new Date(now.getFullYear(), now.getMonth(), 1).toISOString())
 
       const projectedNextMonth = bookedJobs
-        ? bookedJobs.reduce((sum, inv) => sum + Number(inv.total), 0) * 1.1
+        ? bookedJobs.reduce((sum: number, inv: { total: number }) => sum + Number(inv.total), 0) * 1.1
         : weekRevenue * 4
 
       // Generate AI pulse report
