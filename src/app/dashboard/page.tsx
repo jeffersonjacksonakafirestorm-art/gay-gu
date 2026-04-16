@@ -76,7 +76,7 @@ export default function DashboardPage() {
         outstandingTotal,
         outstandingCount: outstanding?.length || 0,
         activeLeads: activeLeads || 0,
-        recentJobs: (recentJobs || []) as PulseData['recentJobs'],
+        recentJobs: (recentJobs || []) as unknown as PulseData['recentJobs'],
       })
       setLoading(false)
     }
